@@ -1,0 +1,53 @@
+{% extends 'home/home.html' %}
+{% block content %}
+    {% include "home/menu.html" %}
+    <div class="col-md-9">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;会员中心</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post">
+                    {% for msg in get_flashed_messages(category_filter=['ok']) %}
+                        <div>
+                            <font color="green">{{ msg }}</font>
+                        </div>
+                    {% endfor %}
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="input_oldpwd"><span
+                                    class="glyphicon glyphicon-lock"></span>{{ form.old_pwd.label }}</label>
+                            {{ form.old_pwd }}
+                            {% for err in form.old_pwd.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-12" id="error_oldpwd"></div>
+                        <div class="form-group">
+                            <label for="input_newpwd"><span
+                                    class="glyphicon glyphicon-lock"></span>{{ form.new_pwd.label }}</label>
+                            {{ form.new_pwd }}
+                            {% for err in form.new_pwd.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-12" id="error_newpwd"></div>
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $("#m-2").addClass("active")
+        })
+    </script>
+{% endblock %}

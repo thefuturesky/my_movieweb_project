@@ -1,0 +1,105 @@
+{% extends "home/home.html" %}
+{% block css %}
+    <style>
+        .col-lg-1, .col-lg-10, .col-lg-11, .col-lg-12, .col-lg-2, .col-lg-3, .col-lg-4, .col-lg-5, .col-lg-6, .col-lg-7, .col-lg-8, .col-lg-9, .col-md-1, .col-md-10, .col-md-11, .col-md-12, .col-md-2, .col-md-3, .col-md-4, .col-md-5, .col-md-6, .col-md-7, .col-md-8, .col-md-9, .col-sm-1, .col-sm-10, .col-sm-11, .col-sm-12, .col-sm-2, .col-sm-3, .col-sm-4, .col-sm-5, .col-sm-6, .col-sm-7, .col-sm-8, .col-sm-9, .col-xs-1, .col-xs-10, .col-xs-11, .col-xs-12, .col-xs-2, .col-xs-3, .col-xs-4, .col-xs-5, .col-xs-6, .col-xs-7, .col-xs-8, .col-xs-9 {
+            padding-right: 3px;
+            padding-left: 3px;
+        }
+    </style>
+{% endblock %}
+{% block content %}
+    {% include "home/menu.html" %}
+    <div class="col-md-9">
+        <div class="panel panel-warning">
+            <div class="panel-heading">
+                <h3 class="panel-title"><span class="glyphicon glyphicon-map-marker"></span>&nbsp;会员中心</h3>
+            </div>
+            <div class="panel-body">
+                <form role="form" method="post" enctype="multipart/form-data">
+                    {% for msg in get_flashed_messages(category_filter=['ok']) %}
+                        <div>
+                            <font color="green">{{ msg }}</font>
+                        </div>
+                    {% endfor %}
+                    {% for msg in get_flashed_messages(category_filter=['err']) %}
+                        <div>
+                            <font color="red">{{ msg }}</font>
+                        </div>
+                    {% endfor %}
+                    <fieldset>
+                        <div class="form-group">
+                            <label for="input_name">
+                                <span class="glyphicon glyphicon-user"></span>{{ form.name.label }}
+                            </label>
+                            {{ form.name(value = user.name) }}
+                            {% for err in form.name.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_email">
+                                <span class="glyphicon glyphicon-envelope"></span>{{ form.email.label }}
+                            </label>
+                            {{ form.email(value=user.email) }}
+                            {% for err in form.email.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_phone">
+                                <span class="glyphicon glyphicon-phone"></span>{{ form.phone.label }}
+                            </label>
+                            {{ form.phone(value=user.phone) }}
+                            {% for err in form.phone.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_face">
+                                <span class="glyphicon glyphicon-picture"></span>{{ form.face.label }}
+                            </label>
+                            {{ form.face }}
+                            {% for err in form.face.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                            {% if user.face %}
+                            <img src="{{ url_for("static",filename="uploads/user/")+user.face }}" style="width: 300px" class="img-responsive img-rounded">
+                            {% else %}
+                            <img data-src="holder.js/100x100" class="img-responsive img-rounded">
+                            {% endif %}
+                        </div>
+                        <div class="form-group">
+                            <label for="input_info">
+                                <span class="glyphicon glyphicon-edit"></span>{{ form.info.label }}
+                            </label>
+                            {{ form.info }}
+                            {% for err in form.info.errors %}
+                                <div class="col-md-12">
+                                    <span style="color: red">{{ err }}</span>
+                                </div>
+                            {% endfor %}
+                        </div>
+                        <div class="col-md-12" id="error_info"></div>
+                        {{ form.csrf_token }}
+                        {{ form.submit }}
+                    </fieldset>
+                </form>
+            </div>
+        </div>
+    </div>
+{% endblock %}
+{% block js %}
+    <script>
+        $(document).ready(function () {
+            $("#m-1").addClass("active")
+        })
+    </script>
+{% endblock %}
